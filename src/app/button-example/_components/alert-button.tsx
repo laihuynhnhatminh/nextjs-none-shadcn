@@ -8,5 +8,10 @@ export default function AlertButton() {
     alert("This is an alert message!");
   }, []);
 
-  return <Button onClick={handleAlert}>Show Alert</Button>;
+  return (
+    <div className="flex flex-col items-center justify-center p-8 gap-6">
+      <h2 className="text-xl font-semibold mb-4">Alert Button Example</h2>
+      <Button onClick={handleAlert}>Show Alert</Button>
+    </div>
+  );
 }

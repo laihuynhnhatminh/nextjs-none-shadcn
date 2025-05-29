@@ -1,7 +1,7 @@
 "use client";
 
-import { ChevronDownIcon } from "lucide-react";
 import React, { useState, useContext, createContext, useRef } from "react";
+import { LuChevronDown } from "react-icons/lu";
 
 type AccordionType = "single" | "multiple";
 
@@ -129,7 +129,9 @@ export function AccordionItem({
 }: React.ComponentProps<"div"> & AccordionItemProps) {
   return (
     <AccordionItemContext.Provider value={value}>
-      <div className={`border-b ${className ? className : ""}`}>{children}</div>
+      <div className={`border-b last:border-b-0 ${className ? className : ""}`}>
+        {children}
+      </div>
     </AccordionItemContext.Provider>
   );
 }
@@ -167,7 +169,7 @@ export function AccordionTrigger({
   return (
     <button
       ref={buttonRef}
-      className={`w-full flex items-center justify-between py-4 px-4 text-left font-medium transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset ${className}`}
+      className={`w-full flex items-center justify-between py-4 px-4 text-left font-medium transition-colors rounded-lg hover:bg-accent focus:outline-none focus:ring-2 focus:ring-ring focus:ring-inset ${className}`}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       id={`accordion-trigger-${value}`}
@@ -177,7 +179,7 @@ export function AccordionTrigger({
       {...props}
     >
       <span>{children}</span>
-      <ChevronDownIcon
+      <LuChevronDown
         size={24}
         className={`transition-transform duration-200 ${
           isOpen ? "rotate-180" : ""
@@ -206,9 +208,12 @@ export function AccordionContent({
     <div
       id={`accordion-content-${value}`}
       role="region"
+      aria-hidden={!isOpen}
       aria-labelledby={`accordion-trigger-${value}`}
-      className={`overflow-hidden transition-all duration-200 ${
-        isOpen ? "block" : "hidden"
+      className={`overflow-hidden transition-all duration-300 ${
+        isOpen
+          ? "fade-out-50 opacity-100 max-h-screen"
+          : "fade-in-50 opacity-0 max-h-0"
       }`}
     >
       {/* Lazy mounting: only render children after first open */}
